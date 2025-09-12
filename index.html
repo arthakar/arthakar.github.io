@@ -4,61 +4,159 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aryan Thakar — Software Engineer</title>
+  <meta name="description" content="Aryan Thakar — Software Engineer. Full-stack, AI/ML, and web security. Résumé, GitHub, LinkedIn, and selected projects." />
+  <meta property="og:title" content="Aryan Thakar — Software Engineer" />
+  <meta property="og:description" content="Full-stack, AI/ML, web security. Résumé, GitHub, LinkedIn, and selected projects." />
+  <meta property="og:type" content="website" />
   <style>
-    body { margin:0; font-family:sans-serif; background:#0b0c10; color:#e8eaed; }
-    a { color:#7dd3fc; text-decoration:none; }
-    .wrap { max-width:960px; margin:48px auto; padding:0 20px; }
-    header { display:flex; flex-wrap:wrap; align-items:center; gap:18px; justify-content:space-between; }
-    .name { font-size:1.75rem; font-weight:700; }
+    :root { --bg:#0b0c10; --card:#111318; --text:#e8eaed; --muted:#a9b0b8; --acc:#7dd3fc; --border:#222835; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans"; background:var(--bg); color:var(--text); }
+    a { color: var(--acc); text-decoration: none; }
+    .wrap { max-width: 1000px; margin: 48px auto; padding: 0 20px; }
+    header { display:flex; flex-wrap:wrap; align-items:center; gap:18px; justify-content: space-between; }
+    .name { font-size: 1.9rem; font-weight: 800; letter-spacing:.2px; }
+    .sub { color: var(--muted); margin-top:6px; font-size:.95rem; }
     .links { display:flex; flex-wrap:wrap; gap:10px; }
-    .btn { padding:10px 14px; border-radius:10px; background:#1a1f2b; border:1px solid #2a3142; color:#e8eaed; font-weight:600; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
-    .card { background:#111318; border:1px solid #222835; padding:16px; border-radius:14px; }
-    .card h3 { margin:0 0 8px; }
-    .meta { color:#a9b0b8; font-size:.9rem; margin-bottom:10px; }
+    .btn { display:inline-block; padding:10px 14px; border-radius:10px; background:#1a1f2b; border:1px solid #2a3142; color:var(--text); font-weight:600; }
+    .btn:hover { transform: translateY(-1px); }
+    h2 { margin: 28px 0 12px; font-size: 1.1rem; letter-spacing:.4px; color:#c9d4df; font-weight:700; text-transform:uppercase; }
+    p { line-height:1.55; margin:0 0 10px; }
+    .grid { display:grid; gap:16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width:900px){ .grid.cols-3 { grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width:640px){ .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr;} header{gap:8px;} .name{font-size:1.6rem;} }
+    .card { background:var(--card); border:1px solid var(--border); padding:16px; border-radius:14px; }
+    .card h3 { margin:0 0 6px; font-size:1.05rem; }
+    .meta { color:var(--muted); font-size:.9rem; margin-bottom:8px; }
+    .desc { color:#dde3ea; margin:0 0 10px; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+    .tag { font-size:.75rem; padding:4px 8px; background:#0f1117; border:1px solid var(--border); border-radius:999px; color:#cde6ff; }
+    .skills { display:flex; flex-wrap:wrap; gap:8px; }
+    .skill { font-size:.8rem; padding:6px 10px; border:1px solid var(--border); background:#0f1117; border-radius:999px; }
+    footer { margin:32px 0 8px; color:var(--muted); font-size:.95rem; display:flex; align-items:center; gap:12px; justify-content:space-between; flex-wrap:wrap; }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <!-- Header -->
     <header>
       <div>
         <div class="name">Aryan Thakar — Software Engineer</div>
-        <div>Full-stack • AI/ML • Web Security</div>
+        <div class="sub">UMD CS ’26 • Full-stack • AI/ML • Web Security</div>
       </div>
       <nav class="links">
-        <a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank">Résumé (PDF)</a>
-        <a class="btn" href="https://github.com/arthakar" target="_blank">GitHub</a>
-        <a class="btn" href="https://linkedin.com/in/aryanthakar" target="_blank">LinkedIn</a>
+        <a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+        <a class="btn" href="https://github.com/arthakar" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://linkedin.com/in/aryanthakar" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="mailto:aryanthakar@gmail.com">Email</a>
       </nav>
     </header>
 
-    <h2>Highlights</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>DocuWell</h3>
-        <div class="meta">OpenAI • React • MongoDB</div>
-        <p>Patient–doctor chatbot prototype; improved interaction quality by 20%.</p>
-        <a href="https://github.com/arthakar/DocuWell" target="_blank">View code →</a>
-      </article>
-      <article class="card">
-        <h3>Bias in Public Datasets</h3>
-        <div class="meta">Python • Fairlearn • LIME</div>
-        <p>Fairness analysis of U.S. Census &amp; UCI Heart Disease models.</p>
-        <a href="https://github.com/arthakar/Identifying-Areas-of-Bias-in-Datasets" target="_blank">View code →</a>
-      </article>
-      <article class="card">
-        <h3>Authentic Screen Talk</h3>
-        <div class="meta">Flask • SQLAlchemy</div>
-        <p>Movie/TV review site prompting thoughtful reviews beyond star ratings.</p>
-        <a href="https://github.com/arthakar/Authentic-Screen-Talk" target="_blank">View code →</a>
-      </article>
-    </div>
+    <!-- About -->
+    <section>
+      <h2>About Me</h2>
+      <p>
+        Computer Science undergraduate at the University of Maryland (expected Dec 2026).
+        Interested in building reliable, secure, and user-focused software.
+        Experience spans <strong>full-stack engineering</strong>, <strong>AI/ML</strong>, and <strong>web security</strong> across internships, research, and teaching.
+      </p>
+    </section>
 
-    <h2>More</h2>
-    <p>Cons App (ethical consumption): 
-       <a href="https://devpost.com/software/cons-ethical-consumption-app" target="_blank">View project →</a>
-    </p>
+    <!-- Experience Highlights -->
+    <section>
+      <h2>Experience Highlights</h2>
+      <div class="grid cols-2">
+        <article class="card">
+          <h3>Creative Software Developer Intern — RedPeg Marketing</h3>
+          <div class="meta">May–Aug 2025 • Alexandria, VA</div>
+          <p class="desc">Improved a retrieval-augmented generation chatbot’s query resolution quality by <strong>30%</strong>; built a CustomGPT workflow with Microsoft Graph API + OpenAI function calling, saving <strong>30–40 min/week</strong> per employee.</p>
+        </article>
+
+        <article class="card">
+          <h3>Research Fellow — NSF TRAILS (UMD)</h3>
+          <div class="meta">Jun 2024–Jan 2025 • College Park, MD</div>
+          <p class="desc">Designed inclusive interview protocols to reduce bias in automated video interviewing systems; implemented feature extraction with dlib/OpenCV, improving accuracy by <strong>0.1 MSE</strong>.</p>
+        </article>
+
+        <article class="card">
+          <h3>Teaching Assistant — CMSC388J: Building Secure Web Apps</h3>
+          <div class="meta">Fall 2025–Present • UMD</div>
+          <p class="desc">Assist instruction in secure, full-stack web apps; topics and tooling include Python/Flask, Django, MongoDB, and modern front-ends such as Svelte/React.</p>
+        </article>
+
+        <article class="card">
+          <h3>SEO Tech Developer</h3>
+          <div class="meta">Jun 2025–Present • Remote</div>
+          <p class="desc">Built a movie/TV review application using Flask, Jinja, and SQLAlchemy to prompt thoughtful, structured reviews.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section>
+      <h2>Projects</h2>
+      <div class="grid cols-3">
+        <article class="card">
+          <h3>DocuWell</h3>
+          <div class="meta">OpenAI • React • MongoDB • Auth0</div>
+          <p class="desc">Patient–doctor chatbot prototype; improved interaction quality by <strong>20%</strong> with structured follow-ups.</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">OpenAI</span><span class="tag">MongoDB</span></div>
+          <p><a href="https://github.com/arthakar/DocuWell" target="_blank" rel="noopener">View code →</a></p>
+        </article>
+
+        <article class="card">
+          <h3>Bias in Public Datasets</h3>
+          <div class="meta">Python • Fairlearn • LIME</div>
+          <p class="desc">Fairness analysis on U.S. Census &amp; UCI Heart Disease models; surfaced parity/accuracy trade-offs and gender feature over-weighting.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Fairlearn</span><span class="tag">LIME</span></div>
+          <p><a href="https://github.com/arthakar/Identifying-Areas-of-Bias-in-Datasets" target="_blank" rel="noopener">View code →</a></p>
+        </article>
+
+        <article class="card">
+          <h3>Authentic Screen Talk</h3>
+          <div class="meta">Flask • Jinja • SQLAlchemy</div>
+          <p class="desc">Movie/TV review site that prompts thoughtful reviews beyond star ratings.</p>
+          <div class="tags"><span class="tag">Flask</span><span class="tag">Jinja</span><span class="tag">SQLAlchemy</span></div>
+          <p><a href="https://github.com/arthakar/Authentic-Screen-Talk" target="_blank" rel="noopener">View code →</a></p>
+        </article>
+
+        <article class="card">
+          <h3>Cons App — Ethical Consumption</h3>
+          <div class="meta">React Native • Android Studio</div>
+          <p class="desc">Prototype that helps users find ethical product alternatives, reducing search time by ~<strong>50%</strong>.</p>
+          <div class="tags"><span class="tag">React Native</span><span class="tag">Mobile</span></div>
+          <p><a href="https://devpost.com/software/cons-ethical-consumption-app" target="_blank" rel="noopener">View project →</a></p>
+        </article>
+
+        <article class="card">
+          <h3>SEO Dev — Review App</h3>
+          <div class="meta">Flask • Jinja • SQLAlchemy</div>
+          <p class="desc">App used in SEO Tech Developer program to elicit higher-quality opinions with prompt-guided form flows.</p>
+          <div class="tags"><span class="tag">Flask</span><span class="tag">SQLAlchemy</span></div>
+          <!-- If you later open-source this, add the repo link here -->
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section>
+      <h2>Skills</h2>
+      <div class="skills">
+        <span class="skill">Java</span><span class="skill">Python</span><span class="skill">C</span><span class="skill">Rust</span><span class="skill">OCaml</span>
+        <span class="skill">JavaScript</span><span class="skill">SQL</span><span class="skill">React</span><span class="skill">React Native</span>
+        <span class="skill">Node.js</span><span class="skill">Flask</span><span class="skill">MongoDB</span>
+        <span class="skill">TensorFlow</span><span class="skill">PyTorch</span><span class="skill">OpenCV</span>
+        <span class="skill">Fairlearn</span><span class="skill">LIME</span>
+      </div>
+    </section>
+
+    <!-- Footer / Resume CTA -->
+    <footer>
+      <div>© <script>document.write(new Date().getFullYear())</script> Aryan Thakar</div>
+      <div><a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a></div>
+    </footer>
   </div>
 </body>
 </html>
