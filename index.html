@@ -1,44 +1,84 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aryan Thakar — Software Engineer</title>
   <meta name="description" content="Aryan Thakar — Software Engineer. Full-stack, AI/ML, and web security. Résumé, GitHub, LinkedIn, and selected projects." />
-  <meta property="og:title" content="Aryan Thakar — Software Engineer" />
-  <meta property="og:description" content="Full-stack, AI/ML, web security. Résumé, GitHub, LinkedIn, and selected projects." />
-  <meta property="og:type" content="website" />
+  <!-- Theme color for mobile browser UI (updates via JS on toggle) -->
+  <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7fbff" media="(prefers-color-scheme: light)">
   <style>
-    /* Base colors (mobile-first) */
+    /* =========================
+       THEME TOKENS (MOBILE-FIRST)
+       ========================= */
     :root {
       --bg:#0b0c10;
-      --card:#111318;
-      --text:#e8eaed;
-      --muted:#a9b0b8;
-      --acc:#7dd3fc;
-      --border:#222835;
-      --rule:#2a3142;
-      --shadow: none;
-      --h2:#c9d4df;
+      --card:#172033;         /* slightly lighter for better contrast */
+      --text:#eaf0f6;
+      --muted:#aeb7c1;
+      --acc:#0ea5e9;          /* accessible accent */
+      --border:#31415a;       /* stronger border for separation */
+      --rule:#3a4b66;
+      --shadow: 0 8px 26px rgba(0,0,0,0.45);
+      --h2:#e6edf5;
+      --btn-bg:#1b2436;
+      --btn-border:#2f3f58;
+      --tag-bg:#111827;
+      --link-hover-raise: translateY(-1px);
+    }
+
+    /* LIGHT THEME TOKENS */
+    :root.light {
+      --bg:#f7fbff;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --acc:#0369a1;
+      --border:#d6e3f2;
+      --rule:#d1dbe8;
+      --shadow: 0 8px 24px rgba(14, 23, 42, 0.08);
+      --h2:#0f172a;
+      --btn-bg:#eff6ff;
+      --btn-border:#dbeafe;
+      --tag-bg:#eff6ff;
+    }
+
+    /* Respect system preference when mode = auto */
+    @media (prefers-color-scheme: light) {
+      :root[data-theme="auto"] {
+        --bg:#f7fbff; --card:#ffffff; --text:#0f172a; --muted:#475569; --acc:#0369a1;
+        --border:#d6e3f2; --rule:#d1dbe8; --shadow: 0 8px 24px rgba(14, 23, 42, 0.08);
+        --h2:#0f172a; --btn-bg:#eff6ff; --btn-border:#dbeafe; --tag-bg:#eff6ff;
+      }
     }
 
     * { box-sizing:border-box; }
+    html, body { height:100%; }
     body {
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
       background:var(--bg);
       color:var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     a { color: var(--acc); text-decoration: none; }
     img { max-width:100%; height:auto; border-radius:10px; display:block; }
 
     .wrap { max-width: 1000px; margin: 48px auto; padding: 0 20px; }
-    header { display:flex; flex-wrap:wrap; align-items:center; gap:18px; justify-content: space-between; }
+    header { display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content: space-between; }
+    .left { min-width: 260px; }
     .name { font-size: 1.9rem; font-weight: 800; letter-spacing:.2px; }
     .sub { color: var(--muted); margin-top:6px; font-size:.95rem; }
-    .links { display:flex; flex-wrap:wrap; gap:10px; }
-    .btn { display:inline-block; padding:10px 14px; border-radius:10px; background:#1a1f2b; border:1px solid var(--rule); color:var(--text); font-weight:600; }
-    .btn:hover { transform: translateY(-1px); }
+    .links { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .btn {
+      display:inline-block; padding:12px 14px; border-radius:10px;
+      background:var(--btn-bg); border:1px solid var(--btn-border); color:var(--text);
+      font-weight:600; line-height:1; min-height:44px; /* bigger tap target */
+      transition: transform 120ms ease;
+    }
+    .btn:hover { transform: var(--link-hover-raise); }
 
     h2 {
       margin: 28px 0 12px;
@@ -55,8 +95,14 @@
     .grid { display:grid; gap:16px; }
     .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
     .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width:900px){ .grid.cols-3 { grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width:640px){
+      .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr;}
+      header{gap:10px;}
+      .name{font-size:1.6rem;}
+      .links { width:100%; }
+    }
 
-    /* Card */
     .card {
       background:var(--card);
       border:1px solid var(--border);
@@ -66,12 +112,12 @@
     }
     .card h3 { margin:0 0 6px; font-size:1.05rem; }
     .meta { color:var(--muted); font-size:.9rem; margin-bottom:8px; }
-    .desc { color:#dde3ea; margin:0 0 10px; }
+    .desc { color: color-mix(in oklab, var(--text) 88%, black); margin:0 0 10px; }
     .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
-    .tag { font-size:.75rem; padding:4px 8px; background:#0f1117; border:1px solid var(--border); border-radius:999px; color:#cde6ff; }
+    .tag { font-size:.75rem; padding:6px 10px; background:var(--tag-bg); border:1px solid var(--border); border-radius:999px; color: color-mix(in oklab, var(--text) 92%, black); }
 
     .skills { display:flex; flex-wrap:wrap; gap:8px; }
-    .skill { font-size:.8rem; padding:6px 10px; border:1px solid var(--border); background:#0f1117; border-radius:999px; }
+    .skill { font-size:.8rem; padding:6px 10px; border:1px solid var(--border); background:var(--tag-bg); border-radius:999px; }
 
     footer {
       margin:32px 0 8px;
@@ -84,34 +130,47 @@
       flex-wrap:wrap;
     }
 
-    /* ---------- Desktop-only contrast / spacing tweaks ---------- */
-    @media (min-width: 901px) {
-      :root {
-        /* slightly lighter card + stronger border on desktop, plus a soft shadow */
-        --card:#141823;
-        --border:#2f3a4d;
-        --rule:#36445b;
-        --shadow: 0 6px 20px rgba(0,0,0,0.35);
-        --h2:#dde6ef;
-      }
-      .grid.cols-3 { gap:20px; }
-      .card { padding:18px; }
-      /* Slightly increase spacing between cards in Experience/Projects visually */
-      section + section { margin-top: 10px; }
+    /* ---------- Fixed theme toggle (top-right), mobile-safe ---------- */
+    .toggle {
+      position: fixed;
+      top: max(12px, env(safe-area-inset-top));
+      right: max(12px, env(safe-area-inset-right));
+      z-index: 9999;
+      padding:12px 14px;
+      border-radius:12px;
+      background:var(--btn-bg);
+      border:1px solid var(--btn-border);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:700;
+      font-size:1rem;
+      line-height:1;
+      min-width:44px; min-height:44px; /* tap target */
+      box-shadow: var(--shadow);
+      transition: transform 120ms ease;
     }
+    .toggle:hover { transform: var(--link-hover-raise); }
 
     /* Accessible focus style */
-    a:focus-visible, .btn:focus-visible {
+    a:focus-visible, .btn:focus-visible, .toggle:focus-visible {
       outline: 2px dashed var(--acc);
-      outline-offset: 2px;
+      outline-offset: 3px;
+    }
+
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+      .btn, .toggle { transition: none !important; }
+      .btn:hover, .toggle:hover { transform: none !important; }
     }
   </style>
 </head>
 <body>
+  <button class="toggle" id="theme-toggle" aria-label="Toggle theme" title="Switch theme">A</button>
+
   <div class="wrap">
     <!-- Header -->
     <header>
-      <div>
+      <div class="left">
         <div class="name">Aryan Thakar — Software Engineer</div>
         <div class="sub">UMD CS ’26 • Full-stack • AI/ML • Web Security</div>
       </div>
@@ -138,29 +197,24 @@
       <h2>Experience Highlights</h2>
       <div class="grid cols-2">
         <article class="card">
-          <!-- Optional image -->
-          <!-- <img src="/assets/redpeg.png" alt="RedPeg Marketing project screenshot" loading="lazy" /> -->
           <h3>Creative Software Developer Intern — RedPeg Marketing</h3>
           <div class="meta">May–Aug 2025 • Alexandria, VA</div>
           <p class="desc">Improved a retrieval-augmented generation chatbot’s query resolution quality by <strong>30%</strong>; built a CustomGPT workflow with Microsoft Graph API + OpenAI function calling, saving <strong>30–40 min/week</strong> per employee.</p>
         </article>
 
         <article class="card">
-          <!-- <img src="/assets/trails.png" alt="NSF TRAILS research visualization" loading="lazy" /> -->
           <h3>Research Fellow — NSF TRAILS (UMD)</h3>
           <div class="meta">Jun 2024–Jan 2025 • College Park, MD</div>
           <p class="desc">Designed inclusive interview protocols to reduce bias in automated video interviewing systems; implemented feature extraction with dlib/OpenCV, improving accuracy by <strong>0.1 MSE</strong>.</p>
         </article>
 
         <article class="card">
-          <!-- <img src="/assets/cmsc388j.png" alt="CMSC388J course assets" loading="lazy" /> -->
           <h3>Teaching Assistant — CMSC388J: Building Secure Web Apps</h3>
           <div class="meta">Fall 2025–Present • UMD</div>
           <p class="desc">Assist instruction in secure, full-stack web apps; topics and tooling include Python/Flask, Django, MongoDB, and modern front-ends such as Svelte/React.</p>
         </article>
 
         <article class="card">
-          <!-- <img src="/assets/seo-dev.png" alt="SEO Dev app UI" loading="lazy" /> -->
           <h3>SEO Tech Developer</h3>
           <div class="meta">Jun 2025–Present • Remote</div>
           <p class="desc">Built a movie/TV review application using Flask, Jinja, and SQLAlchemy to prompt thoughtful, structured reviews.</p>
@@ -173,7 +227,6 @@
       <h2>Projects</h2>
       <div class="grid cols-3">
         <article class="card">
-          <!-- <img src="/assets/docuwell.png" alt="DocuWell screenshot" loading="lazy" /> -->
           <h3>DocuWell</h3>
           <div class="meta">OpenAI • React • MongoDB • Auth0</div>
           <p class="desc">Patient–doctor chatbot prototype; improved interaction quality by <strong>20%</strong> with structured follow-ups.</p>
@@ -182,7 +235,6 @@
         </article>
 
         <article class="card">
-          <!-- <img src="/assets/bias.png" alt="Bias analysis charts" loading="lazy" /> -->
           <h3>Bias in Public Datasets</h3>
           <div class="meta">Python • Fairlearn • LIME</div>
           <p class="desc">Fairness analysis on U.S. Census &amp; UCI Heart Disease models; surfaced parity/accuracy trade-offs and gender feature over-weighting.</p>
@@ -191,7 +243,6 @@
         </article>
 
         <article class="card">
-          <!-- <img src="/assets/screentalk.png" alt="Authentic Screen Talk UI" loading="lazy" /> -->
           <h3>Authentic Screen Talk</h3>
           <div class="meta">Flask • Jinja • SQLAlchemy</div>
           <p class="desc">Movie/TV review site that prompts thoughtful reviews beyond star ratings.</p>
@@ -200,7 +251,6 @@
         </article>
 
         <article class="card">
-          <!-- <img src="/assets/cons.png" alt="Cons App mobile screens" loading="lazy" /> -->
           <h3>Cons App — Ethical Consumption</h3>
           <div class="meta">React Native • Android Studio</div>
           <p class="desc">Prototype that helps users find ethical product alternatives, reducing search time by ~<strong>50%</strong>.</p>
@@ -209,7 +259,6 @@
         </article>
 
         <article class="card">
-          <!-- <img src="/assets/seoapp.png" alt="SEO Dev app screens" loading="lazy" /> -->
           <h3>SEO Dev — Review App</h3>
           <div class="meta">Flask • Jinja • SQLAlchemy</div>
           <p class="desc">App used in SEO Tech Developer program to elicit higher-quality opinions with prompt-guided form flows.</p>
@@ -236,5 +285,47 @@
       <div><a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a></div>
     </footer>
   </div>
+
+  <script>
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const KEY = 'aryan-theme';
+      const icons = { auto:'A', light:'☀️', dark:'🌙' };
+
+      // Initialize: default to 'auto', override with saved
+      const saved = localStorage.getItem(KEY) || 'auto';
+      applyTheme(saved);
+
+      btn.addEventListener('click', () => {
+        let current = localStorage.getItem(KEY) || 'auto';
+        const next = current === 'auto' ? 'light' : current === 'light' ? 'dark' : 'auto';
+        localStorage.setItem(KEY,next);
+        applyTheme(next);
+      });
+
+      function applyTheme(mode){
+        root.classList.remove('light');
+        root.setAttribute('data-theme', mode==='auto'?'auto':'');
+        if(mode==='light'){ root.classList.add('light'); }
+        btn.textContent = icons[mode];
+
+        // Update mobile browser theme color for nicer UI chrome
+        const darkMeta = document.querySelector('meta[name="theme-color"][media*="dark"]');
+        const lightMeta = document.querySelector('meta[name="theme-color"][media*="light"]');
+        if(mode==='light'){
+          lightMeta && lightMeta.setAttribute('content', '#f7fbff');
+          darkMeta && darkMeta.setAttribute('content', '#f7fbff');
+        } else if(mode==='dark'){
+          lightMeta && lightMeta.setAttribute('content', '#0b0c10');
+          darkMeta && darkMeta.setAttribute('content', '#0b0c10');
+        } else { /* auto */
+          // reset to media-queried values
+          lightMeta && lightMeta.setAttribute('content', '#f7fbff');
+          darkMeta && darkMeta.setAttribute('content', '#0b0c10');
+        }
+      }
+    })();
+  </script>
 </body>
 </html>
