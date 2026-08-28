@@ -116,6 +116,25 @@
     .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
     .tag { font-size:.75rem; padding:6px 10px; background:var(--tag-bg); border:1px solid var(--border); border-radius:999px; color: color-mix(in oklab, var(--text) 92%, black); }
 
+    /* ---------- Experience (card stack; single column keeps the
+       reverse-chronological order reading as a sequence, not a grid) ---------- */
+    .exp-list {
+      list-style:none; margin:0; padding:0;
+      display:grid; gap:16px; grid-template-columns:1fr;
+    }
+    /* Card chrome intentionally duplicated from .card rather than reusing it, so
+       restyling Projects cards can't silently restyle Experience. */
+    .exp-item {
+      background:var(--card);
+      border:1px solid var(--border);
+      padding:16px;
+      border-radius:14px;
+      box-shadow: var(--shadow);
+    }
+    .exp-role { margin:0 0 6px; font-size:1.05rem; line-height:1.35; }
+    .exp-meta { color:var(--muted); font-size:.9rem; margin:0 0 8px; }
+    .exp-impact { margin:0; color: color-mix(in oklab, var(--text) 88%, black); }
+
     .skills { display:flex; flex-wrap:wrap; gap:8px; }
     .skill { font-size:.8rem; padding:6px 10px; border:1px solid var(--border); background:var(--tag-bg); border-radius:999px; }
 
@@ -192,34 +211,70 @@
       </p>
     </section>
 
-    <!-- Experience Highlights -->
-    <section>
-      <h2>Experience Highlights</h2>
-      <div class="grid cols-2">
-        <article class="card">
-          <h3>Creative Software Developer Intern — RedPeg Marketing</h3>
-          <div class="meta">May–Aug 2025 • Alexandria, VA</div>
-          <p class="desc">Improved a retrieval-augmented generation chatbot’s query resolution quality by <strong>30%</strong>; built a CustomGPT workflow with Microsoft Graph API + OpenAI function calling, saving <strong>30–40 min/week</strong> per employee.</p>
-        </article>
+    <!-- Experience -->
+    <section aria-labelledby="exp-heading">
+      <h2 id="exp-heading">Experience</h2>
 
-        <article class="card">
-          <h3>Research Fellow — NSF TRAILS (UMD)</h3>
-          <div class="meta">Jun 2024–Jan 2025 • College Park, MD</div>
-          <p class="desc">Designed inclusive interview protocols to reduce bias in automated video interviewing systems; implemented feature extraction with dlib/OpenCV, improving accuracy by <strong>0.1 MSE</strong>.</p>
-        </article>
+      <!--
+        SORTING CONVENTION — read before editing dates.
 
-        <article class="card">
-          <h3>Teaching Assistant — CMSC388J: Building Secure Web Apps</h3>
-          <div class="meta">Fall 2025–Present • UMD</div>
-          <p class="desc">Assist instruction in secure, full-stack web apps; topics and tooling include Python/Flask, Django, MongoDB, and modern front-ends such as Svelte/React.</p>
-        </article>
+        Each <li> carries data-start-date and data-end-date. These are SORT KEYS ONLY;
+        they never generate the visible date text. When a role's dates change, update
+        BOTH the data attributes and the visible <time> elements.
 
-        <article class="card">
-          <h3>SEO Tech Developer</h3>
-          <div class="meta">Jun 2025–Present • Remote</div>
-          <p class="desc">Built a movie/TV review application using Flask, Jinja, and SQLAlchemy to prompt thoughtful, structured reviews.</p>
-        </article>
-      </div>
+        Values are ISO YYYY-MM-DD. data-end-date also accepts the literal "present"
+        for an ongoing role, which sorts newer than any dated role. (Supported but
+        currently unused — no role is ongoing.)
+
+        Coarse labels are approximated to a real day, asymmetrically, so that a role
+        visibly spanning "May–Aug" never sorts as if it ended before one starting in
+        August:
+          start dates round DOWN to the first day of the month
+          end   dates round UP   to the last  day of the month
+        Season map: Spring -> -03, Summer -> -06, Fall -> -09, Winter -> -12.
+
+        Source order below is already the sorted result (descending end date), so the
+        no-JS view matches the scripted view. The script is a safety net for future
+        edits, not the source of truth.
+      -->
+      <ol id="experience-list" class="exp-list">
+        <li class="exp-item" data-start-date="2025-06-01" data-end-date="2026-02-28">
+          <h3 class="exp-role">SEO Tech Developer</h3>
+          <p class="exp-meta">
+            <time datetime="2025-06">Jun 2025</time>–<time datetime="2026-02">Feb 2026</time>
+            <span aria-hidden="true">•</span> Remote
+          </p>
+          <p class="exp-impact">Built a movie/TV review application using Flask, Jinja, and SQLAlchemy to prompt thoughtful, structured reviews.</p>
+        </li>
+
+        <!-- sort keys: "Fall 2025" ≈ 2025-09-01 through 2025-12-31 -->
+        <li class="exp-item" data-start-date="2025-09-01" data-end-date="2025-12-31">
+          <h3 class="exp-role">Teaching Assistant — CMSC388J: Building Secure Web Apps</h3>
+          <p class="exp-meta">
+            <time datetime="2025-09">Fall 2025</time>
+            <span aria-hidden="true">•</span> University of Maryland
+          </p>
+          <p class="exp-impact">Assisted instruction in secure, full-stack web apps; topics and tooling included Python/Flask, Django, MongoDB, and modern front-ends such as Svelte/React.</p>
+        </li>
+
+        <li class="exp-item" data-start-date="2025-05-01" data-end-date="2025-08-31">
+          <h3 class="exp-role">Creative Software Developer Intern — RedPeg Marketing</h3>
+          <p class="exp-meta">
+            <time datetime="2025-05">May</time>–<time datetime="2025-08">Aug 2025</time>
+            <span aria-hidden="true">•</span> Alexandria, VA
+          </p>
+          <p class="exp-impact">Improved a retrieval-augmented generation chatbot’s query resolution quality by <strong>30%</strong>; built a CustomGPT workflow with Microsoft Graph API + OpenAI function calling, saving <strong>30–40 min/week</strong> per employee.</p>
+        </li>
+
+        <li class="exp-item" data-start-date="2024-06-01" data-end-date="2025-01-31">
+          <h3 class="exp-role">Research Fellow — NSF TRAILS (UMD)</h3>
+          <p class="exp-meta">
+            <time datetime="2024-06">Jun 2024</time>–<time datetime="2025-01">Jan 2025</time>
+            <span aria-hidden="true">•</span> College Park, MD
+          </p>
+          <p class="exp-impact">Designed inclusive interview protocols to reduce bias in automated video interviewing systems; implemented feature extraction with dlib/OpenCV, improving accuracy by <strong>0.1 MSE</strong>.</p>
+        </li>
+      </ol>
     </section>
 
     <!-- Projects -->
@@ -324,6 +379,47 @@
           lightMeta && lightMeta.setAttribute('content', '#f7fbff');
           darkMeta && darkMeta.setAttribute('content', '#0b0c10');
         }
+      }
+    })();
+
+    /* Experience auto-sort: descending end date, then descending start date.
+       Moves existing <li> nodes (never rebuilds markup), so links, <time>
+       elements, and list semantics survive untouched. Runs after the theme
+       IIFE and is fully guarded, so a bad date can never affect theming. */
+    (function(){
+      try {
+        const list = document.getElementById('experience-list');
+        if (!list) return;
+
+        const items = Array.from(list.children).filter(el => el.tagName === 'LI');
+        if (items.length < 2) return;
+
+        const ISO = /^\d{4}-\d{2}-\d{2}$/;
+
+        // "present" ranks above every dated role. Malformed values sink to the
+        // bottom rather than throwing.
+        function key(el, attr){
+          const raw = (el.getAttribute(attr) || '').trim();
+          if (raw === 'present') return Infinity;
+          if (!ISO.test(raw)) return -Infinity;
+          const t = Date.parse(raw + 'T00:00:00Z');
+          return Number.isNaN(t) ? -Infinity : t;
+        }
+
+        // Infinity - Infinity is NaN, so compare by ordering rather than subtracting.
+        function desc(a, b){ return a === b ? 0 : (a > b ? -1 : 1); }
+
+        items.sort(function(a, b){
+          return desc(key(a, 'data-end-date'),   key(b, 'data-end-date'))
+              || desc(key(a, 'data-start-date'), key(b, 'data-start-date'));
+        });
+
+        // appendChild on an attached node moves it; the fragment batches to one reflow.
+        const frag = document.createDocumentFragment();
+        items.forEach(function(li){ frag.appendChild(li); });
+        list.appendChild(frag);
+      } catch (e) {
+        /* Leave the static source order in place. */
       }
     })();
   </script>
