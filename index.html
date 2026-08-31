@@ -186,12 +186,16 @@
 
     .links { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
     .btn {
-      display:inline-block; padding:12px 14px; border-radius:10px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:12px 14px; border-radius:10px;
       background:var(--btn-bg); border:1px solid var(--btn-border); color:var(--text);
       font-weight:600; line-height:1; min-height:44px; /* bigger tap target */
       transition: transform 120ms ease;
     }
     .btn:hover { transform: var(--link-hover-raise); }
+    /* Monoline icons inherit currentColor, so both themes are handled by .btn's color.
+       flex-shrink:0 keeps the glyph from squashing before the label wraps in .links. */
+    .btn svg { width:16px; height:16px; flex-shrink:0; }
 
     h2 {
       margin: 28px 0 12px;
@@ -390,10 +394,22 @@
         <p class="sub">Computer Science, University of Maryland — expected Dec 2026</p>
       </div>
       <nav class="links" aria-label="Profiles and résumé">
-        <a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
-        <a class="btn" href="https://github.com/arthakar" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn" href="https://linkedin.com/in/aryanthakar" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn" href="mailto:aryanthakar@gmail.com">Email</a>
+        <a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 19h16"/></svg>
+          Resume
+        </a>
+        <a class="btn" href="https://github.com/arthakar" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 1.5A10.5 10.5 0 0 0 1.5 12c0 4.64 3.01 8.57 7.18 9.96.53.1.72-.23.72-.5v-1.76c-2.92.64-3.54-1.4-3.54-1.4-.48-1.22-1.17-1.55-1.17-1.55-.95-.65.07-.64.07-.64 1.06.08 1.62 1.09 1.62 1.09.93 1.6 2.44 1.14 3.03.87.1-.68.37-1.14.66-1.4-2.33-.27-4.78-1.17-4.78-5.2 0-1.15.41-2.09 1.08-2.83-.11-.27-.47-1.34.1-2.79 0 0 .88-.28 2.87 1.08a9.9 9.9 0 0 1 5.22 0c1.99-1.36 2.87-1.08 2.87-1.08.57 1.45.21 2.52.1 2.79.67.74 1.08 1.68 1.08 2.83 0 4.04-2.46 4.93-4.8 5.19.38.33.71.97.71 1.96v2.9c0 .28.19.61.73.5A10.5 10.5 0 0 0 22.5 12A10.5 10.5 0 0 0 12 1.5z"/></svg>
+          GitHub
+        </a>
+        <a class="btn" href="https://linkedin.com/in/aryanthakar" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zM9.5 9.5h3.83v1.5h.05a4.2 4.2 0 0 1 3.77-2.07c4.03 0 4.78 2.65 4.78 6.1v5.47h-4v-4.85c0-1.16-.02-2.65-1.61-2.65-1.62 0-1.87 1.26-1.87 2.56v4.94h-3.95v-11z"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn" href="mailto:aryanthakar@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg>
+          Email
+        </a>
       </nav>
     </header>
 
@@ -565,7 +581,10 @@
     <!-- Footer / Resume CTA -->
     <footer>
       <div>© <script>document.write(new Date().getFullYear())</script> Aryan Thakar</div>
-      <div><a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a></div>
+      <div><a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 19h16"/></svg>
+        Download Resume
+      </a></div>
     </footer>
   </div>
 
