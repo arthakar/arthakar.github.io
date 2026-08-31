@@ -3,11 +3,110 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aryan Thakar — Software Engineer</title>
-  <meta name="description" content="Aryan Thakar — Software Engineer. Full-stack, AI/ML, and web security. Résumé, GitHub, LinkedIn, and selected projects." />
+  <title>Aryan Thakar — Secure Full-Stack Engineer</title>
+  <meta name="description" content="Aryan Thakar — secure full-stack engineer with applied AI experience. UMD Computer Science. Résumé, GitHub, LinkedIn, and selected projects." />
+  <link rel="canonical" href="https://aryanthakar.com/" />
+
+  <!-- Open Graph / Twitter. og:image intentionally omitted: no image asset in the
+       repo, and a tag pointing at a missing file renders a broken preview card,
+       which is worse than degrading to a text-only preview. Add a 1200x630 image
+       and the corresponding og:image / twitter:image tags together. -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Aryan Thakar — Secure Full-Stack Engineer" />
+  <meta property="og:description" content="Secure full-stack engineer with applied AI experience. UMD Computer Science." />
+  <meta property="og:url" content="https://aryanthakar.com/" />
+  <meta name="twitter:card" content="summary" />
+
   <!-- Theme color for mobile browser UI (updates via JS on toggle) -->
   <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f7fbff" media="(prefers-color-scheme: light)">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aryan Thakar",
+    "url": "https://aryanthakar.com/",
+    "jobTitle": "Software Engineer",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Maryland"
+    },
+    "sameAs": [
+      "https://github.com/arthakar",
+      "https://linkedin.com/in/aryanthakar"
+    ]
+  }
+  </script>
+
+  <!--
+    PRE-PAINT THEME APPLICATION — must stay inline, synchronous, and in <head>.
+
+    Without this, :root defaults to the dark token set, so the browser paints a
+    dark frame before the deferred theme script at the end of <body> reads
+    localStorage and corrects it. Light-mode visitors see a dark flash on every
+    load. Applying the class here means the first paint is already correct.
+
+    Deliberately minimal: it sets only the class and data-theme attribute that
+    the CSS keys off. It does NOT update the theme-color metas — those affect
+    browser chrome, not the painted page, so they can wait for applyTheme().
+
+    Exposed as window.__applyThemeClass so the body script reuses this exact
+    logic instead of duplicating it. Keeping one definition means the two cannot
+    silently diverge; see applyTheme() near the end of <body>.
+  -->
+  <script>
+    (function(){
+      function applyThemeClass(mode){
+        var root = document.documentElement;
+        root.classList.remove('light');
+        root.setAttribute('data-theme', mode === 'auto' ? 'auto' : '');
+        if (mode === 'light') root.classList.add('light');
+      }
+      window.__applyThemeClass = applyThemeClass;
+
+      var saved = 'auto';
+      try { saved = localStorage.getItem('aryan-theme') || 'auto'; } catch (e) { /* storage blocked */ }
+      applyThemeClass(saved);
+    })();
+  </script>
+
+  <!--
+    INTRO GATE — decides pre-paint whether the intro runs, so the page never
+    paints un-faded and then jumps behind an overlay.
+
+    Only sets the flag and the class; the sequence itself runs from the script at
+    the end of <body>, once #intro exists in the DOM.
+
+    Failing closed: reduced-motion, blocked storage, or an already-seen session
+    all skip the intro. Every uncertain path resolves to "show the site".
+  -->
+  <script>
+    (function(){
+      var run = true;
+      try {
+        if (window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches) run = false;
+      } catch (e) { run = false; }
+
+      if (run) {
+        try {
+          if (sessionStorage.getItem('aryan-intro-seen')) {
+            run = false;
+          } else {
+            // Written at the decision point, not on completion: someone who
+            // navigates away mid-intro has still seen it and should not get it
+            // again on the next page in the same session.
+            sessionStorage.setItem('aryan-intro-seen', '1');
+          }
+        } catch (e) { run = false; }   // private mode / storage disabled
+      }
+
+      window.__introShouldRun = run;
+      if (run) document.documentElement.classList.add('intro-active');
+    })();
+  </script>
+
   <style>
     /* =========================
        THEME TOKENS (MOBILE-FIRST)
@@ -66,11 +165,25 @@
     a { color: var(--acc); text-decoration: none; }
     img { max-width:100%; height:auto; border-radius:10px; display:block; }
 
+    /* Skip link: off-screen until focused, then pinned top-left. Uses transform
+       rather than display/visibility so it stays focusable at all times. */
+    .skip-link {
+      position:fixed; top:0; left:0; z-index:10001;
+      padding:12px 16px; border-radius:0 0 10px 0;
+      background:var(--btn-bg); border:1px solid var(--btn-border);
+      color:var(--text); font-weight:600;
+      transform: translateY(-120%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
     .wrap { max-width: 1000px; margin: 48px auto; padding: 0 20px; }
     header { display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content: space-between; }
+    .hero { align-items:flex-start; gap:20px; }
     .left { min-width: 260px; }
-    .name { font-size: 1.9rem; font-weight: 800; letter-spacing:.2px; }
-    .sub { color: var(--muted); margin-top:6px; font-size:.95rem; }
+    .name { font-size: 2.2rem; font-weight: 800; letter-spacing:.2px; margin:0; line-height:1.15; }
+    .tagline { font-size:1.05rem; margin:10px 0 0; max-width:46ch; }
+    .sub { color: var(--muted); margin:6px 0 0; font-size:.95rem; }
+
     .links { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
     .btn {
       display:inline-block; padding:12px 14px; border-radius:10px;
@@ -134,6 +247,10 @@
     .exp-role { margin:0 0 6px; font-size:1.05rem; line-height:1.35; }
     .exp-meta { color:var(--muted); font-size:.9rem; margin:0 0 8px; }
     .exp-impact { margin:0; color: color-mix(in oklab, var(--text) 88%, black); }
+    /* Every entry uses a <ul> of bullets. padding-left holds the markers inside
+       the card; without it they sit on the card border. */
+    ul.exp-impact { padding-left:1.15em; display:grid; gap:6px; }
+    ul.exp-impact li { line-height:1.55; }
 
     .skills { display:flex; flex-wrap:wrap; gap:8px; }
     .skill { font-size:.8rem; padding:6px 10px; border:1px solid var(--border); background:var(--tag-bg); border-radius:999px; }
@@ -171,29 +288,108 @@
     .toggle:hover { transform: var(--link-hover-raise); }
 
     /* Accessible focus style */
-    a:focus-visible, .btn:focus-visible, .toggle:focus-visible {
+    a:focus-visible, .btn:focus-visible, .toggle:focus-visible, .skip-link:focus {
       outline: 2px dashed var(--acc);
       outline-offset: 3px;
     }
+
+    /* ---------- One-time intro overlay ----------
+       Sits between the theme toggle (9999) and the skip link (10001): a keyboard
+       user who Tabs during the intro must still see the skip link, and Tab is
+       also an abort trigger.
+
+       #main is faded, never display:none — the page stays laid out and painted
+       underneath the whole time, so revealing it shifts nothing (CLS = 0). */
+    #intro {
+      position:fixed; inset:0; z-index:10000;
+      display:grid; place-items:center;
+      background:var(--bg); color:var(--text);
+      opacity:1; transition: opacity 850ms ease;
+    }
+    /* Must come after the rule above and carry !important: `display:grid` is an
+       element-level rule that would otherwise beat the UA stylesheet's
+       `[hidden] { display:none }`, leaving a "hidden" overlay fully visible. */
+    #intro[hidden] { display:none !important; }
+    html.intro-active #main,
+    html.intro-active .wrap > header,
+    html.intro-active .wrap > footer { opacity:0; }
+    html.intro-active #main,
+    html.intro-active .wrap > header,
+    html.intro-active .wrap > footer,
+    #main, .wrap > header, .wrap > footer { transition: opacity 850ms ease; }
+
+    /* Scroll lock while the overlay is up. */
+    html.intro-active, html.intro-active body { overflow:hidden; }
+
+    html.intro-done #intro { opacity:0; pointer-events:none; }
+
+    .intro-line {
+      margin:0; padding:0 20px;
+      font-size:2.2rem; font-weight:800; letter-spacing:.2px; line-height:1.15;
+      display:flex; align-items:center; gap:.12em;
+      max-width:100%;
+    }
+    /* Dot doubles as idle indicator then typing caret. Sized in em so it tracks
+       the text; vertical nudge keeps it on the baseline rather than centred. */
+    .intro-dot {
+      width:.38em; height:.38em; border-radius:50%;
+      background:var(--acc); flex:none;
+      transform: translateY(.06em);
+      /* One full cycle fits the 600ms idle phase, so the dot completes a breath
+         rather than being cut off mid-pulse when typing begins. */
+      animation: intro-pulse 600ms ease-in-out infinite;
+    }
+    html.intro-typing .intro-dot { animation:none; opacity:1; }
+    html.intro-fading-dot .intro-dot { opacity:0; transition: opacity 150ms ease; }
+
+    @keyframes intro-pulse {
+      0%, 100% { opacity:.25; transform: translateY(.06em) scale(.85); }
+      50%      { opacity:1;   transform: translateY(.06em) scale(1); }
+    }
+
+    @media (max-width:640px){ .intro-line { font-size:1.6rem; } }
 
     /* Reduce motion for users who prefer it */
     @media (prefers-reduced-motion: reduce) {
       .btn, .toggle { transition: none !important; }
       .btn:hover, .toggle:hover { transform: none !important; }
+      /* .skip-link transform is positioning, not decoration — it must NOT be
+         reset here, or the link would sit visible over the page permanently. */
+
+      /* Intro is skipped entirely. CSS enforces this independently of the JS
+         check, so a mid-run script failure still cannot leave an overlay up. */
+      #intro { display:none !important; }
+      html.intro-active #main,
+      html.intro-active .wrap > header,
+      html.intro-active .wrap > footer { opacity:1 !important; }
+      html.intro-active, html.intro-active body { overflow:auto !important; }
+      #main, .wrap > header, .wrap > footer, #intro { transition:none !important; }
+      .intro-dot { animation:none !important; }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Intro overlay. `hidden` by default so no-JS and script-failure both land on
+       "no overlay" without a cleanup path; the head script unhides it only when
+       the intro should actually run. aria-hidden because the name is already in
+       the <h1> below — announcing it twice is noise, and the typing is decorative. -->
+  <div id="intro" hidden>
+    <p class="intro-line" aria-hidden="true"><span id="intro-text"></span><span class="intro-dot" id="intro-dot"></span></p>
+  </div>
+
   <button class="toggle" id="theme-toggle" aria-label="Toggle theme" title="Switch theme">A</button>
 
   <div class="wrap">
-    <!-- Header -->
-    <header>
+    <!-- Hero -->
+    <header class="hero">
       <div class="left">
-        <div class="name">Aryan Thakar — Software Engineer</div>
-        <div class="sub">UMD CS ’26 • Full-stack • AI/ML • Web Security</div>
+        <h1 class="name">Aryan Thakar</h1>
+        <p class="tagline">Secure full-stack engineer with applied AI experience.</p>
+        <p class="sub">Computer Science, University of Maryland — expected Dec 2026</p>
       </div>
-      <nav class="links">
+      <nav class="links" aria-label="Profiles and résumé">
         <a class="btn" href="./Aryan_Thakar_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
         <a class="btn" href="https://github.com/arthakar" target="_blank" rel="noopener">GitHub</a>
         <a class="btn" href="https://linkedin.com/in/aryanthakar" target="_blank" rel="noopener">LinkedIn</a>
@@ -201,13 +397,19 @@
       </nav>
     </header>
 
-    <!-- About -->
-    <section>
-      <h2>About Me</h2>
+    <!-- Wraps only the content sections: <header> and <footer> are siblings, not
+         children, since they are their own landmarks. #main is both the skip-link
+         target and the opacity target for the planned intro overlay — keeping the
+         page laid out beneath the overlay is what avoids layout shift on reveal. -->
+    <main id="main">
+      <!-- About -->
+    <section aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
       <p>
-        Computer Science undergraduate at the University of Maryland (expected Dec 2026).
-        Interested in building reliable, secure, and user-focused software.
-        Experience spans <strong>full-stack engineering</strong>, <strong>AI/ML</strong>, and <strong>web security</strong> across internships, research, and teaching.
+        I build reliable, secure, user-focused software. My work spans
+        <strong>full-stack engineering</strong>, <strong>applied AI</strong>, and
+        <strong>web security</strong> across industry internships, NSF-funded research,
+        and teaching secure web development at the University of Maryland.
       </p>
     </section>
 
@@ -238,13 +440,29 @@
         edits, not the source of truth.
       -->
       <ol id="experience-list" class="exp-list">
+        
+        <!-- <li class="exp-item" data-start-date="2026-05-01" data-end-date="2026-08-31">
+          <h3 class="exp-role">AI Security Intern @ MITRE</h3>
+          <p class="exp-meta">
+            <time datetime="2026-05">May</time>–<time datetime="2026-08">Aug 2026</time>
+            <span aria-hidden="true">•</span> McLean, VA
+          </p>
+          <ul class="exp-impact">
+            <li>Built an experimental pipeline for testing robustness of Open Policy Agents using attack cases generated with Promptfoo, reducing successful attacks by <strong>30%</strong> for output-rail and tool-authentication components.</li>
+            <li>Increased throughput and usability of AI vulnerability analysis software by developing a Docker-containerized React/FastAPI web application using Redis for batch queueing and Celery workers for concurrent processing; identified parser-validation vulnerabilities through testing varied system prompts.</li>
+            <li>Won the AI Learning Track Hackathon by collaborating to fine-tune a phishing-link classification model that achieved the competition’s lowest log-loss score.</li>
+          </ul>
+        </li> -->
+
         <li class="exp-item" data-start-date="2025-06-01" data-end-date="2026-02-28">
           <h3 class="exp-role">SEO Tech Developer</h3>
           <p class="exp-meta">
             <time datetime="2025-06">Jun 2025</time>–<time datetime="2026-02">Feb 2026</time>
             <span aria-hidden="true">•</span> Remote
           </p>
-          <p class="exp-impact">Built a movie/TV review application using Flask, Jinja, and SQLAlchemy to prompt thoughtful, structured reviews.</p>
+          <ul class="exp-impact">
+            <li>Built a movie/TV review application using Flask, Jinja, and SQLAlchemy to prompt thoughtful, structured reviews.</li>
+          </ul>
         </li>
 
         <!-- sort keys: "Fall 2025" ≈ 2025-09-01 through 2025-12-31 -->
@@ -254,25 +472,34 @@
             <time datetime="2025-09">Fall 2025</time>
             <span aria-hidden="true">•</span> University of Maryland
           </p>
-          <p class="exp-impact">Assisted instruction in secure, full-stack web apps; topics and tooling included Python/Flask, Django, MongoDB, and modern front-ends such as Svelte/React.</p>
+          <ul class="exp-impact">
+            <li>Assisted instruction in secure, full-stack web apps.</li>
+            <li>Topics and tooling included Python/Flask, Django, MongoDB, and modern front-ends such as Svelte/React.</li>
+          </ul>
         </li>
 
         <li class="exp-item" data-start-date="2025-05-01" data-end-date="2025-08-31">
-          <h3 class="exp-role">Creative Software Developer Intern — RedPeg Marketing</h3>
+          <h3 class="exp-role">Creative Software Developer Intern @ RedPeg Marketing</h3>
           <p class="exp-meta">
             <time datetime="2025-05">May</time>–<time datetime="2025-08">Aug 2025</time>
             <span aria-hidden="true">•</span> Alexandria, VA
           </p>
-          <p class="exp-impact">Improved a retrieval-augmented generation chatbot’s query resolution quality by <strong>30%</strong>; built a CustomGPT workflow with Microsoft Graph API + OpenAI function calling, saving <strong>30–40 min/week</strong> per employee.</p>
+          <ul class="exp-impact">
+            <li>Improved a retrieval-augmented generation chatbot’s query resolution quality by <strong>30%</strong>.</li>
+            <li>Built a CustomGPT workflow with Microsoft Graph API + OpenAI function calling, saving <strong>30–40 min/week</strong> per employee.</li>
+          </ul>
         </li>
 
         <li class="exp-item" data-start-date="2024-06-01" data-end-date="2025-01-31">
-          <h3 class="exp-role">Research Fellow — NSF TRAILS (UMD)</h3>
+          <h3 class="exp-role">Research Fellow @ NSF TRAILS (UMD)</h3>
           <p class="exp-meta">
             <time datetime="2024-06">Jun 2024</time>–<time datetime="2025-01">Jan 2025</time>
             <span aria-hidden="true">•</span> College Park, MD
           </p>
-          <p class="exp-impact">Designed inclusive interview protocols to reduce bias in automated video interviewing systems; implemented feature extraction with dlib/OpenCV, improving accuracy by <strong>0.1 MSE</strong>.</p>
+          <ul class="exp-impact">
+            <li>Designed inclusive interview protocols to reduce bias in automated video interviewing systems.</li>
+            <li>Implemented feature extraction with dlib/OpenCV, improving accuracy by <strong>0.1 MSE</strong>.</li>
+          </ul>
         </li>
       </ol>
     </section>
@@ -333,6 +560,7 @@
         <span class="skill">Fairlearn</span><span class="skill">LIME</span>
       </div>
     </section>
+    </main>
 
     <!-- Footer / Resume CTA -->
     <footer>
@@ -342,6 +570,100 @@
   </div>
 
   <script>
+    /* Intro sequence. Phases: 600ms idle dot -> 1500ms typing -> 550ms hold on the
+       finished name -> 850ms fade to page. 3500ms to fully visible.
+
+       Deliberately 500ms past the original 3s budget, spent entirely on a slower
+       final fade: the extra time lands after the name is already readable, so
+       perceived wait is unchanged even though total duration is longer.
+
+       Runs first so that if it throws, the catch still calls finish() and the
+       page is revealed; the theme IIFE below is unaffected either way. */
+    (function(){
+      var root = document.documentElement;
+
+      // The head gate already decided. When it says skip, the overlay must still
+      // be explicitly hidden — it is only `hidden` in the source, and any path
+      // that unhid it (or a stale class) would otherwise leave it stranded.
+      if (!window.__introShouldRun) {
+        var skipped = document.getElementById('intro');
+        if (skipped) skipped.hidden = true;
+        root.classList.remove('intro-active', 'intro-typing', 'intro-fading-dot', 'intro-done');
+        return;
+      }
+
+      // HOLD_MS is the beat on the finished name. The dot's 150ms fade runs at the
+      // start of it, so the last ~400ms is the name completely still — which is
+      // what makes the pause read as deliberate rather than as a transition seam.
+      var IDLE_MS = 600, TYPE_MS = 1500, HOLD_MS = 550, NAME = 'Aryan Thakar';
+
+      var overlay = document.getElementById('intro');
+      var textEl  = document.getElementById('intro-text');
+      var timers  = [];
+      var typer   = null;
+      var done    = false;
+
+      function finish(){
+        if (done) return;            // idempotent: interrupt and timeout can race
+        done = true;
+        timers.forEach(clearTimeout);
+        clearInterval(typer);
+        root.classList.add('intro-done');
+        root.classList.remove('intro-active', 'intro-typing', 'intro-fading-dot');
+
+        // Remove the overlay once faded. Timeout backstop in case transitionend
+        // never fires (background tab, transition interrupted).
+        var cleaned = false;
+        function cleanup(){
+          if (cleaned) return;
+          cleaned = true;
+          // Hide first, THEN drop the class. Reversing this order un-fades the
+          // overlay for a frame before it is hidden, which reads as the intro
+          // flashing back over the finished page.
+          if (overlay) overlay.hidden = true;
+          root.classList.remove('intro-done');
+        }
+        if (overlay) overlay.addEventListener('transitionend', cleanup, { once:true });
+        // Backstop must exceed the 850ms fade, or it hides the overlay mid-fade
+        // and the reveal snaps instead of easing.
+        setTimeout(cleanup, 1100);
+      }
+
+      // Any of these abort straight to the finished page. Tab matters most: a
+      // keyboard user must never be stuck behind the overlay.
+      ['keydown', 'pointerdown'].forEach(function(evt){
+        window.addEventListener(evt, finish, { once:true });
+      });
+      // Background tabs throttle timers; don't strand a returning visitor.
+      document.addEventListener('visibilitychange', function(){
+        if (document.hidden) finish();
+      });
+
+      try {
+        if (!overlay || !textEl) { finish(); return; }
+        overlay.hidden = false;
+
+        timers.push(setTimeout(function(){
+          root.classList.add('intro-typing');
+
+          var i = 0;
+          var step = TYPE_MS / NAME.length;
+          typer = setInterval(function(){
+            i++;
+            textEl.textContent = NAME.slice(0, i);   // textContent, never innerHTML
+            if (i >= NAME.length) {
+              clearInterval(typer);
+              root.classList.add('intro-fading-dot');
+              // 600 idle + 1500 type + 550 hold + 850 fade = 3500ms total.
+              timers.push(setTimeout(finish, HOLD_MS));
+            }
+          }, step);
+        }, IDLE_MS));
+      } catch (e) {
+        finish();
+      }
+    })();
+
     (function(){
       const root = document.documentElement;
       const btn = document.getElementById('theme-toggle');
@@ -360,9 +682,16 @@
       });
 
       function applyTheme(mode){
-        root.classList.remove('light');
-        root.setAttribute('data-theme', mode==='auto'?'auto':'');
-        if(mode==='light'){ root.classList.add('light'); }
+        // Class/attribute application is defined once, in the pre-paint script in
+        // <head>, and reused here so the two cannot silently diverge. Falls back to
+        // an inline copy only if that script somehow did not run.
+        if (window.__applyThemeClass) {
+          window.__applyThemeClass(mode);
+        } else {
+          root.classList.remove('light');
+          root.setAttribute('data-theme', mode==='auto'?'auto':'');
+          if(mode==='light'){ root.classList.add('light'); }
+        }
         btn.textContent = icons[mode];
 
         // Update mobile browser theme color for nicer UI chrome
