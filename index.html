@@ -209,6 +209,41 @@
     }
     p { line-height:1.55; margin:0 0 10px; }
 
+    /* DISABLED — About photo layout. Re-enable together with the <img> and the
+       .about-grid wrapper in the About section markup.
+
+    .about-grid {
+      display:grid;
+      grid-template-columns: 220px 1fr;
+      gap:28px;
+      align-items:start;
+    }
+    .about-photo { width:100%; border-radius:12px; box-shadow:var(--shadow); }
+
+    @media (max-width:640px){
+      .about-grid { grid-template-columns:1fr; gap:18px; }
+      .about-photo { max-width:200px; }
+    }
+    */
+
+    /* Paragraph spacing is larger than the global 10px because the paragraphs
+       are the structure here — they need to read as separate beats. */
+    .about p { margin:0 0 16px; }
+    .about p:last-child { margin-bottom:0; }
+    .about-lead { font-size:1.1rem; font-weight:600; }
+
+    /* Pull quote: left rule rather than a card, to stay quieter than the
+       surrounding section cards while still breaking the vertical rhythm. */
+    .about-quote {
+      margin:20px 0;
+      padding:2px 0 2px 16px;
+      border-left:3px solid var(--acc);
+      font-size:1.05rem;
+      font-style:italic;
+      color:var(--text);
+    }
+    .about-quote p { margin:0; }
+
     .grid { display:grid; gap:16px; }
     .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
     .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
@@ -421,12 +456,37 @@
       <!-- About -->
     <section aria-labelledby="about-heading">
       <h2 id="about-heading">About</h2>
-      <p>
-        I build reliable, secure, user-focused software. My work spans
-        <strong>full-stack engineering</strong>, <strong>applied AI</strong>, and
-        <strong>web security</strong> across industry internships, NSF-funded research,
-        and teaching secure web development at the University of Maryland.
-      </p>
+      <!-- DISABLED — photo beside the prose. Re-enable with the .about-grid /
+           .about-photo rules in the stylesheet.
+      <div class="about-grid">
+        <img
+          src="assets/aryan.jpg"
+          alt="Aryan Thakar on McKeldin Mall at the University of Maryland"
+          class="about-photo"
+          width="720" height="900"
+          loading="lazy"
+          decoding="async">
+      -->
+        <div class="about">
+          <p class="about-lead">
+            Hi, I'm Aryan. I love inventing, creating, and bringing ideas to life.
+          </p>
+          <p>
+            I'm currently studying computer science and business at the University of Maryland, and I tend to start technical problems with a non-technical question: Why are we building this?
+          </p>
+          <p>
+            Through my experiences in software development, AI research, and experiential marketing, I've become fascinated by the intersection of technology and the people who use it.
+          </p>
+
+          <blockquote class="about-quote">
+            <p>I care as much about why we build things as how we build them.</p>
+          </blockquote>
+
+          <p>
+            To me, good technology helps us solve harder problems, make better decisions, and spend more time on what matters. When ideas become experiences rather than just features, technology becomes something people genuinely enjoy using.
+          </p>
+        </div>
+      <!-- </div> closes .about-grid — re-enable with the block above. -->
     </section>
 
     <!-- Experience -->
